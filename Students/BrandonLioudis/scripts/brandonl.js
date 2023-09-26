@@ -7,9 +7,9 @@ $(document).ready(function() {                                              // j
 
     $("#MButton1").click(function() {                                       // assign click() function to button using button id
         $("#jQdemo").css("color","purple");                                        // dynamically sets the style for the specified element
-        $("#jQdemo").html("This was designed by you, a Trevor day student or teacher");       // adds the text to the html of the element, $ at front of statement indicates jQuery,                                                                  // # at front of object indicates id, function to be called comes after . 
-        alert("You just created words");                                    // call alert just for testing purposes
-        $("#MButton1").html("I created words dynamically");                             // change the button label, or do whatever you want
+        $("#jQdemo").html("Brandon Lioudis Project Journal");       // adds the text to the html of the element, $ at front of statement indicates jQuery,                                                                  // # at front of object indicates id, function to be called comes after . 
+        alert("You pressed the Journal button);                                    // call alert just for testing purposes
+        $("#MButton1").html("I created a journal");                             // change the button label, or do whatever you want
     });                                                                     // note how the jQuery $ identifiers link the html object to the javaScript object
 
 }); // end of jQuery block
