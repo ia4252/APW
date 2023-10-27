@@ -13,7 +13,6 @@ function toggleContent(elem, num) {
     else {
         content.style.display = "none";
     }
-    // &#9660; is down arrow, &#9650; is up arrow
     if (elem.innerHTML === "Entry " + num + ": Show More") {
         elem.innerHTML = "Entry " + num + ": Show Less";
     }
@@ -26,19 +25,19 @@ function toggleContent(elem, num) {
 let slideIndex = 1;
 
 // Next/previous controls
-function plusSlides(n) {
-    showSlides(slideIndex += n);
+function plusSlides(n, entryNum) {
+    showSlides(slideIndex += n, entryNum);
 }
 
 // Thumbnail image controls
-function currentSlide(n) {
-    showSlides(slideIndex = n);
+function currentSlide(n, entryNum) {
+    showSlides(slideIndex = n, entryNum);
 }
 
-function showSlides(n) {
+function showSlides(n, entryNum) {
     let i;
-    let slides = document.getElementsByClassName("carousel");
-    let dots = document.getElementsByClassName("dot");
+    let slides = document.getElementById("entry-" + entryNum).getElementsByClassName("carousel");
+    let dots = document.getElementById("entry-" + entryNum).getElementsByClassName("dot");
     if (n > slides.length) { slideIndex = 1 }
     if (n < 1) { slideIndex = slides.length }
     for (i = 0; i < slides.length; i++) {
