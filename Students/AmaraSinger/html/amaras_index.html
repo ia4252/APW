@@ -122,6 +122,15 @@
 		</div>
 	</div>
 
+	<div id="entry-1" class="toggle-content">
+		<button onclick="toggleContent(this, 3)">Entry 3: Show More</button>
+		<div class="devlog-entry" style="display: none;">
+			<h3>Entry 3: Feburuary 2024</h3>
+			<p>More non-flashy things. I've been going through the arduous process of cleaning up my messy, 3-year old code.</p>
+			<p>As a sample of what I'm doing, here's a good example. Essentially, a lot of information is passed around the game through a static class called 'World,' where everything in it is initialized and checked in various points. The width and height of the screen is stored in World. There were over two hundred references to those over the entire project. I've been cleaning it up to be less... messy.</p>
+		</div>
+	</div>
+
 
 	<p class="footer"><a href="../../../index.html">APW Home</a></p>
 </body>
