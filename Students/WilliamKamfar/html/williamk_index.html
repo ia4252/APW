@@ -46,6 +46,14 @@
         header, main {
             padding: 20px;
         }
+        section {
+            margin-top: 50px; /* Adjust the value to move the section down */
+        }
+
+        /* Style for text within the section */
+        .text-in-section {
+            margin-top: 600px; /* Adjust the value to move the text down within the section */
+        }
     </style>
 </head>
 <body>
@@ -88,6 +96,125 @@
         <section>
             <h2>November 2nd</h2>
             <p>I finally managed to form an LLC! I will be registering my information with Steam and various other platforms in order to publish the project once it is finished. I am aiming to have a releasable demo by the end of the year. I also was working on rebuilding the movement system from the ground up which is taking significantly more time than I expected, but I should be able to finish everything this weekend. The main things I need to do now are work on the inventory system (which I have mapped out), and make the interactables (items, doors, cabinets, and buttons), so we can start constructing environments. With that done, I can combine my work with that of my partners and we can probably finish our demo.<p>
+        </section>
+        <section>
+            <h2>November 17th</h2>
+            <p>I worked on my project, and I managed to get a working inventory and interactions system. I still have not received an EIN, but as soon as I do, I will work on making a steam page for my game. While we still need to complete some content for the steam page, once done we can start marketing to the fullest. We have many of the necessary blocks in place to aim for a demo by the end of the year, and then our marketing will be in full force. We have been planning out our future approach, and we will see how things turn out. <p>    
+        </section>
+        <section>
+            <h2>December 8th, 2023</h2>
+            <p>I have finally received all the information I need, and I am now working on registering my information with Steam, but since I am a minor, doing all this is significantly harder because I have to work with my uncle (who signs on my behalf). I should have the publisher page up soon and everything should be smooth sailing from there. I also registered a domain, made a corporate email for everyone, and set up a company website. Aside from just the representation side of things, I’ve also managed to get some work done on the game. I managed to code most of the inventory system to allow for the player to move around items and such as well as access several inventory tabs. While it is taking a while to finish everything, I’ve planned it out so that the game will have a demo by January 31st. I’ve also tried to get everyone at SwankyStudios on a schedule so I could monitor what they are doing and also make more consistent progress on the project. As always, game progress is slow, but It is happening. I also am trying to work with Sam Rabinor to help him publish his own game. I also have added the ability to move items around in the menus + interact with them.<p>    
+        </section>
+        <section>
+            <h2>December 22nd, 2023</h2>
+            <p>While I tried to get work done on the menu systems, the last 2 weeks have been quite rough for progress. Since most of my classes have assigned some kind of major assignment/assessment that I either had to study for or write up. I want to get so much done, but Junior year is rough. Also, my family leaves for Christmas, so we celebrate it early with my grandfather… Aside from Junior year, I have been able to file for Steamworks and get accepted for publishing games and I started working on some basic systems for my game. I am still working on the menu systems because I have been so swamped with work recently that I have not made any considerable progress. Hopefully, I am able to make a lot of progress over the break in order to reach the ever approaching January deadline. I will definitely get more work done over the break, and I will fill out the information required to publish a game.</p>
+        </section>
+        <section>
+            <h2>February 6th, 2024</h2>
+            <p>This month has been a time of progress for the project because I have ripped out a bunch of code from my former iterations of the game and I completely reworked the walking system, and I am currently figuring out how to add a ledge hang / vaulting mechanic to the game, which requires me to fully implement the map elements. I spent this month really building the mechanics of the game, so that it will be in a playable state once we implement all the items and ai and models that we have been working on. I also focused on implementing netcode in the game, so we would be able to play online. I also tried to work with the microphone, so we could have voice chat in the game. On top of that, I want to implement AI in the future of the game so that the enemies can analyze what the players say because I think that would be interesting.</p>
+            <div style="position:relative;"> 
+                <img src="SSWebsiteThumbnailV1-COMPLETED.png"
+                style="position:absolute;
+                width:960px;
+                height:540px;
+                top: 0px;
+                left:0px;">
+                </div>
+        </section>
+        <section>
+            <h3 class="text-in-section"><b>Sample Code From Player Movement</b></h3>
+            <pre>
+public void MovePlayer(Vector3 movement)
+{
+    // Save current momentum
+    Vector3 momentum = movement;
+
+    // current number of bounces
+    int bounces = 0;
+
+    // Character ability to push objects
+    //CharacterPush push = GetComponent<CharacterPush>(); // add this later
+
+    // Continue computing while there is momentum and bounces remaining
+    while (momentum.magnitude &gt; Epsilon &amp;&amp; bounces &lt;= maxBounces)
+    {
+        // Do a cast of the collider to see if an object is hit during this
+        // movement bounce
+        float distance = momentum.magnitude;
+        if (!CastSelf(momentum.normalized, distance, out RaycastHit hit))
+        {
+            // If there is no hit, move to desired position
+            transform.position += momentum;
+            // Exit as we are done bouncing
+            break;
+        }
+
+        /* // Apply some force to the object hit if it is moveable, Apply force on entity hit
+        if (push != null &amp;&amp;
+            hit.collider.attachedRigidbody != null &amp;&amp;
+            !hit.collider.attachedRigidbody.isKinematic &amp;&amp;
+            hit.collider.gameObject.GetComponent&lt;IPushable&gt;() != null)
+        {
+            push.PushObject(new KinematicCharacterControllerHit(
+                hit.collider, hit.collider.attachedRigidbody, hit.collider.gameObject,
+                hit.collider.transform, hit.point, hit.normal, momentum.normalized, movement.magnitude
+            ));
+            // If pushing something, reduce remaining force significantly
+            momentum *= pushDecay;
+        }*/ // pushing
+
+        float fraction = hit.distance / distance;
+        // Set the fraction of remaining movement (minus some small value)
+        transform.position += momentum * (fraction);
+        // Push slightly along normal to stop from getting caught in walls
+        transform.position += hit.normal * Epsilon;
+        // Decrease remaining momentum by fraction of movement remaining
+        momentum *= (1 - fraction);
+
+        // Plane to project rest of movement onto
+        Vector3 planeNormal = hit.normal;
+
+        /*// Snap character vertically up if they hit something
+        //  close enough to their feet
+        float distanceToFeet = hit.point.y - (transform.position - selfCollider.bounds.extents).y;
+        if (hit.distance &gt; 0 &amp;&amp; !attemptingJump &amp;&amp; distanceToFeet &lt; verticalSnapUp &amp;&amp; distanceToFeet &gt; 0)
+        {
+            // Sometimes snapping up the exact distance leads to odd behaviour around steps and walls.
+            // It's good to check the maximum and minimum snap distances and take whichever one works.
+            // Attempt to snap up the maximum vertical distance
+            if (!AttemptSnapUp(verticalSnapUp, hit, momentum))
+            {
+                // If that movement doesn't work, snap them up the minimum vertical distance
+                AttemptSnapUp(distanceToFeet + Epsilon * 2, hit, momentum);
+            }
+        }*/ // snapping up (implement later)
+        // Only apply angular change if hitting something
+        // Get angle between surface normal and remaining movement
+        float angleBetween = Vector3.Angle(hit.normal, momentum) - 90.0f;
+        // Normalize angle between to be between 0 and 1
+        // 0 means no angle, 1 means 90 degree angle
+        angleBetween = Mathf.Min(MaxAngleShoveRadians, Mathf.Abs(angleBetween));
+        float normalizedAngle = angleBetween / MaxAngleShoveRadians;
+        // Reduce the momentum by the remaining movement that ocurred
+        momentum *= Mathf.Pow(1 - normalizedAngle, anglePower) * 0.9f + 0.1f;
+        // Rotate the remaining remaining movement to be projected along the plane 
+        // of the surface hit (emulate pushing against the object)
+        Vector3 projectedMomentum = Vector3.ProjectOnPlane(momentum, planeNormal).normalized * momentum.magnitude;
+        if (projectedMomentum.magnitude + Epsilon &lt; momentum.magnitude)
+        {
+            momentum = Vector3.ProjectOnPlane(momentum, Vector3.up).normalized * momentum.magnitude;
+        }
+        else
+        {
+            momentum = projectedMomentum;
+        }
+
+        // Track number of times the character has bounced
+        bounces++;
+    }
+    // We're done, player was moved as part of loop
+}
+                </pre>
         </section>
     </main>
 </body>
