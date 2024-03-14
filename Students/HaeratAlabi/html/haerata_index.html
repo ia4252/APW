@@ -1,0 +1,34 @@
+<!DOCTYPE html>	   <!-- comments in html blocks use this awkward structure -->
+<html lang="en">  <!-- pages will usually work without these two lines but best practice would suggest they be added -->
+
+  	<head>										<!-- 'head' is for stuff you set up before you start actually displaying things on the page itself -->
+		<meta charset="utf-8">					<!-- defines character set to be used, optional, but not using it could cause potential issues in complex pages -->
+    	<title>Haerat Page</title>		<!-- the title text will appear on the tab for this page at the top of the browser -->
+    	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"> <!-- loads a specific font file from google directory into this page -->
+    	<link href="../styles/Haerat.css" rel="stylesheet" type="text/css">  	<!-- links to a file for storing specific css style information for this page -->
+      <link rel="icon" type="image/x-icon" href="../images/favicon.png">
+      <!-- adds a favicon -->
+  	</head>
+
+  	<body>	<!-- your html goes in this block  -->
+    <body style="background-color:aquamarine;"> <!-- changes background color  -->
+  	<img src="../images/FloatingDNA.png" style="width:10%">   <!-- this could change to link to your image in your images folder -->
+
+  	<h2>Haerat's Webpage</h2>
+
+    <p style id="box"> Hi There - Welcome to Haerat's Website. So Much to Come!</p>   <!-- example using id defined object from css file linked to above -->
+
+    <span style class="wan"> How was your day today</span>  <!-- example using class defined in css file linked to above -->
+
+    <font face="Georgia">Here is the promosal for my project: Over the summer, I worked with NYU's Biomolecular Engineering lab and will continue to work with them over the school year. This is a new project that they are undertaking that will involve me doing deep research and coding. I will be working to create a model that will generate the model/sequence of B-Glucosidase, an enzyme. We want to create a model where we will give the model the structure it will provide a sequence, and vice versa. This would, hopefully, make it more time and cost-efficient to find versions of enzymes that are more thermostable and have a longer half-life. </font>
+
+	<p id="jQdemo"></p>  <!--- the content of this line starts as blank but is created dynamically once javeScript/JQuery starts -->
+	<p><button id='MButton1'>Press Me!!!!!! </button></p>	<!--- creates an html object with an id that can be referenced in the jQuery/javaScript file -->
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>    <!-- loads jquery API library --->
+  	<script src="../scripts/yourname.js"></script>   <!-- loads js file from 'scrips' directory into this page -->
+
+  	<p><a href="../../../index.html">APW Home</a></p>  <!-- link back to home page, note has to move back 3 folders to get to root for the site -->
+  	
+  	</body>
+</html>
